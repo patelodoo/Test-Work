@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherit view for add custom fields -->
+    <record id="view_hr_attendance_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='overtime_hours']" position="after">
+                <field name="project_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                <field name="task_id" readonly="not project_id" force_save="1" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                <field name="attendance_description"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
