@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bloopack_complaints,access_bloopack_complaints,model_bloopack_complaints,,1,1,1,1
+access_complaint_type,access_complaint_type,model_complaint_type,,1,1,1,1
+access_question_complaint_answer,access_question_complaint_answer,model_question_complaint_answer,,1,1,1,1
+access_drop_complaint,access_drop_complaint,model_drop_complaint,,1,1,1,1

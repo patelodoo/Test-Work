@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Complaint Type Tree-->
+        <record id="view_complaint_type_tree" model="ir.ui.view">
+            <field name="name">complaint.type.tree</field>
+            <field name="model">complaint.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Complaint Type Form-->
+        <record id="view_complaint_type_form" model="ir.ui.view">
+            <field name="name">complaint.type.form</field>
+            <field name="model">complaint.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="Complaint Type">
+                            <field name="name"/>
+                            <field name="user_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Complaint Type Action-->
+        <record model="ir.actions.act_window" id="complaint_type_view_action">
+            <field name="name">Complaint Type</field>
+            <field name="res_model">complaint.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Complaint type
+                </p>
+            </field>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Complaint Type Menu-->
+        <menuitem
+                id="bloopack_complaint_configuration_menu"
+                name="Configuration"
+                parent="bloopack_complaint_root_menu"
+                sequence="2"/>
+
+        <menuitem
+                id="complaint_type_menu"
+                name="Complaint Type"
+                parent="bloopack_complaint_configuration_menu"
+                action="complaint_type_view_action"
+                sequence="1"/>
+    </data>
+</odoo>

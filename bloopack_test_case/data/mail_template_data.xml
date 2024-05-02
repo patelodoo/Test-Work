@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="new_complaint_request_email_template" model="mail.template">
+            <field name="name">Complaint Received</field>
+            <field name="model_id" ref="bloopack_test_case.model_bloopack_complaints"/>
+            <field name="subject">{{ object.name }}</field>
+            <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or
+                object.user_id.email_formatted or user.email_formatted) }}
+            </field>
+            <field name="email_to">{{ (object.email) }}
+            </field>
+            <field name="body_html" type="html">
+                <div>
+                    Hello, <t t-out="object.name or object.sudo().name or 'Madam/Sir'"/>
+                    <br/>
+                    <br/>
+                    Your request of
+                    <t t-out="object.type.name or object.sudo().type.name"/>
+                    has been received and is being reviewed by our <t t-out="object.user_id.name">Support</t> team.
+                    <br/>
+                    <br/>
+                    The reference for your ticket is
+                    <strong>
+                        <t t-out="object.complaint_number or ''">DIN5008000001</t>
+                    </strong>
+                    <br/>
+                    <br/>
+                    Thank you for your prompt action.
+                    <br/>
+                    <br/>
+                    Best regards,
+                    <t t-out="object.user_id.name or object.sudo().user_id.name"><br/>Bloopack Complaint</t>Team
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="solved_complaint_email_template" model="mail.template">
+            <field name="name">Complaint Solved</field>
+            <field name="model_id" ref="bloopack_test_case.model_bloopack_complaints"/>
+            <field name="subject">{{ object.name }}</field>
+            <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or
+                object.user_id.email_formatted or user.email_formatted) }}
+            </field>
+            <field name="email_to">{{ (object.email) }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    hello <t t-out="object.name or object.sudo().name or 'Madam/Sir'"/>,
+                    <br/>
+                    <br/>
+                    your complaint number is
+                    <strong>
+                        <t t-out="object.complaint_number or ''">DIN5008000001</t>
+                    </strong>
+                    successfully resolved.
+                    <br/>
+                    <br/>
+                    <t t-if="env.context.get('action_plan')">
+                        <strong>here's the action plan for complaint :</strong>
+                        <br/>
+                        <t t-out="env.context.get('action_plan')"/>
+                        <br/>
+                    </t>
+                    Thank you.
+                    <br/>
+                    <br/>
+                    Best regards,
+                    <t t-out="object.user_id.name or object.sudo().user_id.name"><br/>Bloopack Complaint</t>team
+                </div>
+            </field>
+        </record>
+
+        <record id="closed_complaint_email_template" model="mail.template">
+            <field name="name">Complaint Dropped</field>
+            <field name="model_id" ref="bloopack_test_case.model_bloopack_complaints"/>
+            <field name="subject">{{ object.name }}</field>
+            <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or
+                object.user_id.email_formatted or user.email_formatted) }}
+            </field>
+            <field name="email_to">{{ (object.email) }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    Hello <t t-out="object.name or object.sudo().name or 'Madam/Sir'"/>,
+                    <br/>
+                    <br/>
+                    We have to drop your complaint number
+                    <strong>
+                        <t t-out="object.complaint_number or ''">DIN5008000001</t>
+                    </strong>
+                    Thank you for your understanding and We value your feedback and are always here to support you.
+                    <br/>
+                    <br/>
+                    Best regards,
+                    <br/>
+                    <t t-out="object.user_id.name or object.sudo().user_id.name"><br/>Bloopack Complaint</t>team
+                </div>
+            </field>
+        </record>
+
+        <record id="question_answer_complaint_email_template" model="mail.template">
+            <field name="name">Complaint Closed</field>
+            <field name="model_id" ref="bloopack_test_case.model_bloopack_complaints"/>
+            <field name="subject">{{ object.name }}</field>
+            <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or
+                object.user_id.email_formatted or user.email_formatted) }}
+            </field>
+            <field name="email_to">{{ (object.email) }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    Hello <t t-out="object.name or object.sudo().name or 'Madam/Sir'"/>,
+                    <br/>
+                    <br/>
+                    We have thoroughly investigated the matter you raised regarding
+                    <strong>
+                        <t t-out="object.complaint_number or ''">DIN5008000001</t>
+                    </strong>.
+                    After careful consideration.
+                    <br/>
+                    <br/>
+                    Thank you for choosing to be a part of our community.
+                    <br/>
+                    <br/>
+                    Best regards,
+                    <t t-out="object.user_id.name or object.sudo().user_id.name"><br/>Bloopack Complaint</t>team
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

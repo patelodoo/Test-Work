@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_bloopack_complaint">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"></div>
+                        <h2 class="mt-4">
+                            <span>Work Order #</span>
+                            <span t-field="o.complaint_number"/>
+                        </h2>
+                        <div class="row mt-4 mb-2" id="informations">
+                            <table class="table mt-4">
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Name</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Assigned To</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.user_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Address</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.address"/>,<span t-field="o.city"/>,
+                                        <span t-field="o.zip"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>State</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.state_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Country</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.country_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Date</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.create_date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Email</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.email"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span>Problem Description</span>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.description"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row mt-2 mb-2">
+                            <div class="col">
+                                <strong>
+                                    <span>Action Plan :</span>
+                                </strong>
+                                <span t-field="o.action_plan"></span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_work_order" model="report.paperformat">
+        <field name="name">DIN5008</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">27</field>
+        <field name="margin_bottom">40</field>
+        <field name="margin_left">20</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">27</field>
+        <field name="dpi">70</field>
+    </record>
+
+    <record id="action_report_bloopack_complaint" model="ir.actions.report">
+        <field name="name">Work Order</field>
+        <field name="model">bloopack.complaints</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bloopack_test_case.report_bloopack_complaint</field>
+        <field name="report_file">bloopack_test_case.report_bloopack_complaint</field>
+        <field name="binding_model_id" ref="model_bloopack_complaints"/>
+        <field name="paperformat_id" ref="bloopack_test_case.paperformat_work_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

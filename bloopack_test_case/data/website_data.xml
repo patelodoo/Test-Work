@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="bloopack_test_case.bloopack_complaint" name="Bloopack Complaint">
+        <t t-call="website.layout">
+            <t t-set="logged_partner" t-value="request.env['website.visitor']._get_visitor_from_request().partner_id"/>
+            <div id="wrap" class="oe_structure oe_empty">
+                <style>
+                    body {
+                    background-color: #f8f9fa;
+                    }
+                    .complaint-form {
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    }
+                    .complaint-form h2 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    }
+                    .complaint-form .form-group {
+                    margin-bottom: 20px;
+                    }
+                    .complaint-form label {
+                    font-weight: 600;
+                    }
+                    .complaint-form textarea {
+                    resize: none;
+                    }
+                    .complaint-form button {
+                    width: 100%;
+                    }
+                </style>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 mt-5 mb-5">
+                            <div class="complaint-form">
+                                <t t-esc="complaint_type"/>
+                                <h2>Register Bloopack Complaint</h2>
+                                <form id="complaintForm" action="/website/complaint" method="post"
+                                      data-success-mode="redirect" data-success-page="/complaint-thank-you">
+                                    <div class="form-group mt-2">
+                                        <label for="bloopack1">Name</label>
+                                        <input type="char" class="form-control s_website_form_input"
+                                               data-fill-with="name" id="bloopack1" required=""
+                                               placeholder="Name" name="name"/>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="bloopack2">Email</label>
+                                        <input type="email" class="form-control" required="" id="bloopack2"
+                                               placeholder="Email" name="email"/>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="bloopack3">Address</label>
+                                        <input type="char" class="form-control" required="" id="bloopack3"
+                                               placeholder="Address" name="address"/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group mt-2 col-6">
+                                            <label for="bloopack3">City</label>
+                                            <input type="char" class="form-control" required="" id="bloopack4"
+                                                   placeholder="City" name="city"/>
+                                        </div>
+
+                                        <div class="form-group mt-2 col-6">
+                                            <label for="bloopack3">Zip</label>
+                                            <input type="char" class="form-control" required="" id="bloopack5"
+                                                   placeholder="Zip" name="zip"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group mt-2 col-4">
+                                            <label for="bloopack3">Phone</label>
+                                            <input type="char" class="form-control" required="" id="bloopack6"
+                                                   placeholder="Phone" name="phone"/>
+                                        </div>
+
+                                        <div class="form-group mt-2 col-4">
+                                            <label for="bloopack7">State</label>
+                                            <t t-set="country_states"
+                                               t-value="request.env['res.country.state'].sudo().search([('country_id', '=', 57)])"/>
+                                            <select name="state_id" class="form-select">
+                                                <t t-foreach="country_states" t-as="s">
+                                                    <option t-att-value="s.id">
+                                                        <t t-esc="s.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mt-2 col-4">
+                                            <label for="bloopack7">Country</label>
+                                            <t t-set="countries"
+                                               t-value="request.env['res.country'].sudo().search([('id', '=', 57)])"/>
+                                            <select id="country_id" name="country_id"
+                                                    class="form-select s_website_form_input" required="1">
+                                                <t t-foreach="countries" t-as="c">
+                                                    <option t-att-value="c.id" t-att-selected="c.id == 233">
+                                                        <t t-esc="c.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="bloopack9">Type</label>
+                                        <t t-set="complaint_type_ids"
+                                           t-value="request.env['complaint.type'].sudo().search([])"/>
+                                        <select id="complaint-type-select" class="form-select" name="type_id"
+                                                required="">
+                                            <option t-att-value=""/>
+                                            <t t-foreach="complaint_type_ids" t-as="type">
+                                                <option t-att-value="type.id" t-out="type.name"/>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="bloopack10">Description</label>
+                                        <textarea type="char" class="form-control" required="" row="5" id="bloopack5"
+                                                  placeholder="Problem Description" name="description"/>
+                                    </div>
+                                    <button type="submit" value="submit" class="btn btn-primary">Submit Complaint
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Complaint Thank You, Page  -->
+    <record id="bloopack_test_case.complaint_thanks" model="website.page">
+        <field name="name">Thanks (Complaint Thanks)</field>
+        <field name="type">qweb</field>
+        <field name="url">/complaint-thank-you</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="is_published">True</field>
+        <field name="key">bloopack_test_case.complaint_thanks</field>
+        <field name="arch" type="xml">
+            <t name="Thanks (Complaint Thanks)" t-name="bloopack_test_case.complaint_thanks">
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty">
+                        <section class="s_text_block pt40 pb40 o_colored_level " data-snippet="s_text_block">
+                            <div class="container s_allow_columns">
+                                <div class="row">
+                                    <div class="col-lg-12 col-xl-12 me-lg-auto">
+                                        <span class="d-block fa fa-4x fa-thumbs-up mx-auto rounded-circle bg-primary"/>
+                                        <br/>
+                                        <h1 class="text-center">Thank You!</h1>
+                                        <h2 class="text-center">Your Complaint Number is
+                                            <t t-esc="number"/>
+                                        </h2>
+                                        <div class="pb16 pt16 s_hr" data-snippet="s_hr" data-name="Separator">
+                                            <hr class="mx-auto border-top w-50 border-dark text-center"/>
+                                        </div>
+                                        <h5 class="text-center">
+                                            <span class="fa fa-check-circle"/>
+                                            <span>Thank You for submitting your issue, our team will get right on it !
+                                            </span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+    <!-- Complaint Web Page -->
+    <record id="bloopack_complaint_page" model="website.page">
+        <field name="url">/bloopack/complaint/form</field>
+        <field name="is_published">True</field>
+        <field name="view_id" ref="bloopack_complaint"/>
+        <field name="track">True</field>
+        <field name="website_meta_description">This is the Complaint page of the website</field>
+    </record>
+
+    <!-- Complaint Website Menu -->
+    <record id="menu_bloopack_complaint" model="website.menu">
+        <field name="name">Bloopack Complaint</field>
+        <field name="page_id" ref="bloopack_complaint_page"/>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">50</field>
+    </record>
+
+</odoo>
